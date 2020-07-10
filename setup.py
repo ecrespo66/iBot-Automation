@@ -7,7 +7,7 @@ from setuptools import find_packages
 setup(
     name='iBot',
     packages=['iBot'],  # Mismo nombre que en la estructura de carpetas de arriba
-    version='0.2',
+    version='0.3',
     license='LGPL v3',  # La licencia que tenga tu paquete
     descriptionl='Python RPA library',
     author='Enrique Crespo',
