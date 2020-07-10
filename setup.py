@@ -5,7 +5,7 @@ from glob import glob
 
 setup(
     name='iBot',
-    packages=['iBot'],  # Mismo nombre que en la estructura de carpetas de arriba
+    packages=['iBot-Automation'],  # Mismo nombre que en la estructura de carpetas de arriba
     version='0.1',
     license='LGPL v3',  # La licencia que tenga tu paquete
     descriptionl='Python RPA library',
