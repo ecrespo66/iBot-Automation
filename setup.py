@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 
 setup(
-    name='iBot',
+    name='iBotAutomation',
     packages=['iBot'],  # Mismo nombre que en la estructura de carpetas de arriba
     version='0.3',
     license='LGPL v3',  # La licencia que tenga tu paquete
