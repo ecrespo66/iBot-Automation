@@ -1,5 +1,5 @@
 # iBot-Automation
-iBot Automation is an RPA designed to Automate Business process.
+iBot Automation is an RPA tool designed to Automate Business process.
 
 #Modules Available
 01. Browser - Automate Browser Activites
