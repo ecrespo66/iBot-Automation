@@ -1,6 +1,7 @@
 import os
 import string
 import random
+import time
 
 
 def KillProcess(process=None, name=None):
@@ -20,7 +21,5 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 
 
 def Wait(seconds=None):
-    '''
-    Stall the execution of the preceding functions for a specified number of seconds.
-    '''
+
     time.sleep(seconds)

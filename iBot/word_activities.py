@@ -3,9 +3,7 @@ from docx.shared import Inches
 from docx.shared import Cm
 from docx2pdf import convert
 import os
-
-
-from .file_images_folder_activities import File
+from .files_activities import File
 
 
 class Word(File):
