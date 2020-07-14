@@ -25,6 +25,7 @@ class ChromeBrowser(Chrome):
             pass
         super().__init__(self.driver, options=self.options)
 
+
     def ignoreImages(self):
         prefs = {"profile.managed_default_content_settings.images": 2}
         self.options.add_experimental_option("prefs", prefs)
