@@ -27,6 +27,11 @@ class Screen:
         return
 
     @staticmethod
+    def dragTo(self, to, button='left'):
+        pyautogui.dragTo(to[0], to[1], button=button)
+
+    @staticmethod
     def write(text):
         for t in text:
             pyautogui.press(t)
+
