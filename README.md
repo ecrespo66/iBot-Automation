@@ -1,12 +1,12 @@
 # iBot-Automation
-iBot Automation is a simple cross-platform RPA tool designed to any Automate Business process.
+iBot Automation is a simple cross-platform RPA tool designed to Automate any Business process.
 It works in MacOSX, Windows and linux
 
 ### Requirements
 * Python 3.6 and up.
 
 
-## iBot Automation Modules Available
+## iBot Automation Modules
 =================================
 01. Browser - Automate Browser Activites.
 02. DataBase - Create manage and modify databases.
@@ -40,7 +40,7 @@ Another option is to build from the latest source on the GitHub repository:
 
 Browser automation examples:
 
-'''python
+```python
 from iBot.browser_activities import * 
 
 # undetectable=True to make browser undetectable to AntiBot systems
@@ -48,20 +48,20 @@ Browser = ChromeBrowser(undetectable=True)
 Browser.open()
 Browser.get('https://google.com')
 
-'''
+```
 
 ### DataBase Activities
 
-'''python
+```python
 from iBot.dataBabase_activities import Sqlite
 
-pathToDatabase = c:/sqliteExample.sqlite
+pathToDatabase = "c:/sqliteExample.sqlite"
 Sqlite= Sqlite(pathToDatabase) 
 Data = {"Dg":"Saimon","Gt":"Manuel"}
 tableName = random
 Sqlite.Insert(tableName,Data)
 
-'''
+```
 
 
 
@@ -70,8 +70,8 @@ Sqlite.Insert(tableName,Data)
 If you are interested in this project, please consider contributing. Here are a
 few ways you can help:
 
-- [Report issues](https://github.com/autopilot-rs/autopy/issues).
-- Fix bugs and [submit pull requests](https://github.com/autopilot-rs/autopy/pulls).
+- [Report issues](https://github.com/ecrespo66/iBot-Automation/issues).
+- Fix bugs and [submit pull requests](https://github.com/ecrespo66/iBot-Automation/pulls).
 - Write, clarify, or fix documentation.
 - Suggest or add new features.
 
