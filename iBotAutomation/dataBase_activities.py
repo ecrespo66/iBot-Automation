@@ -51,7 +51,6 @@ class Sqlite:
         return query
 
     def Insert(self, table_name, data):
-
         try:
             self.cursor.execute('SELECT name from sqlite_master where type= "table"')
             TableList = self.cursor.fetchall()
