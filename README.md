@@ -58,7 +58,7 @@ from iBot.dataBabase_activities import Sqlite
 pathToDatabase = "c:/sqliteExample.sqlite"
 Sqlite= Sqlite(pathToDatabase) 
 Data = {"Dg":"Saimon","Gt":"Manuel"}
-tableName = random
+tableName = "random"
 Sqlite.Insert(tableName,Data)
 
 ```
