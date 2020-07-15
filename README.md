@@ -38,7 +38,7 @@ Another option is to build from the latest source on the GitHub repository:
 
 ### Browser Automation
 
-Browser automation examples:
+Browser automation example:
 
 ```python
 from iBot.browser_activities import * 
@@ -51,7 +51,7 @@ Browser.get('https://google.com')
 ```
 
 ### DataBase Activities
-
+Insert data example
 ```python
 from iBot.dataBabase_activities import Sqlite
 
@@ -64,7 +64,7 @@ Sqlite.Insert(tableName,Data)
 ```
 
 ### Email Automation 
-
+Read Emails example **enable less secure apps in your email account settings
 ```python
 from iBot.email_activities import Mail
 
