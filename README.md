@@ -78,7 +78,20 @@ for mail in mails:
     print(mail.subject)
 
 ```
+### Excel Automation 
+Get value from cell  
+```python
+from iBot.excel_activities import Excel
 
+path = "Path/to/workbook.xlsx"
+workbook = Excel(path)
+sheets = workbook.GetSheets()
+sheet = sheets[0]
+cell = "A1"
+
+value = workbook.readCell(cell, sheet)
+
+```
 
 ## Contributing
 
