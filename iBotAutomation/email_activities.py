@@ -7,74 +7,67 @@ from os.path import basename
 import os
 
 
-class Mail():
-    
-    def __init__(self,email,password):
-        self.username = email 
-        self.password = password  
+class Mail:
 
+    def __init__(self, email, password):
+        self.username = email
+        self.password = password
 
-    def send(self,send_to, subject, text=None, html=None ,files= None):
-
-        send_to= default_address if not send_to else send_to
+    def send(self, send_to, subject, text=None, html=None, files=None):
 
         msg = MIMEMultipart()
         msg['From'] = self.username
-        msg['To'] = ', '.join(send_to)  
+        msg['To'] = ', '.join(send_to)
         msg['Subject'] = subject
 
-
-        if text != None:
+        if text is not None:
             msg.attach(MIMEText(text + "\n\n\n", 'plain'))
 
-        if html != None:
+        if html is not None:
             msg.attach(MIMEText(html + "\n\n\n", 'html'))
 
         for f in files or []:
-            with open(f, "rb") as fil: 
+            with open(f, "rb") as fil:
                 ext = f.split('.')[-1:]
-                attachedfile = MIMEApplication(fil.read(), _subtype = ext)
+                attachedfile = MIMEApplication(fil.read(), _subtype=ext)
                 attachedfile.add_header(
-                    'content-disposition', 'attachment', filename=basename(f) )
+                    'content-disposition', 'attachment', filename=basename(f))
             msg.attach(attachedfile)
-
 
         smtp = smtplib.SMTP_SSL('smtp.' + self.username.split("@")[1], 465)
         smtp.ehlo()
-        
-        smtp.login(self.username,self.password)
-        
-        smtp.sendmail(self.username, send_to, msg.as_string())
-        
-        smtp.close()
-        
-        
-    def fetchBox(self, folder=None, Query = None):
 
-        if folder == None:
+        smtp.login(self.username, self.password)
+
+        smtp.sendmail(self.username, send_to, msg.as_string())
+
+        smtp.close()
+
+    def fetchBox(self, folder=None, Query=None):
+
+        if folder is None:
             folder = 'INBOX'
-            
-        if Query == None:
+
+        if Query is None:
             Query = Q(all=True)
-            
+
         server = 'imap.' + self.username.split("@")[1]
-       
         mailbox = MailBox(server)
-        mailbox.login(self.username,  self.password, initial_folder=folder)  # or mailbox.folder.set instead 3d arg
-        
-        message_list=[]
+        mailbox.login(self.username, self.password, initial_folder=folder)  # or mailbox.folder.set instead 3d arg
+
+        message_list = []
         for mail in mailbox.fetch(Query):
-            message_list.append(mail) 
-        
+            message_list.append(mail)
+
         return message_list
-        
+
         mailbox.logout()
-        
-        
-    def save_attachments(self, email, download_folder):
-     
-        msg= email.obj
-        
+
+    @staticmethod
+    def save_attachments(email, download_folder):
+
+        msg = email.obj
+
         att_path = "No attachment found."
         for part in msg.walk():
             if part.get_content_maintype() == 'multipart':
