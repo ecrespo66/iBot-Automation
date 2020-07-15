@@ -34,8 +34,6 @@ Another option is to build from the latest source on the GitHub repository:
     $ make install
 
 
-
-
 ### Browser Automation
 
 Browser automation example:
