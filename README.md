@@ -1,7 +1,13 @@
 # iBot-Automation
-iBot Automation is an RPA tool designed to Automate Business process.
+iBot Automation is a simple cross-platform RPA tool designed to any Automate Business process.
+It works in MacOSX, Windows and linux
 
-##Modules Available
+### Requirements
+* Python 3.6 and up.
+
+
+## iBot Automation Modules Available
+=================================
 01. Browser - Automate Browser Activites.
 02. DataBase - Create manage and modify databases.
 03. Email - Read and send Emails.
@@ -14,5 +20,68 @@ iBot Automation is an RPA tool designed to Automate Business process.
 10. Screen - Find bitmap elements on screen, mouse and keyboard control (move, drag, click and type). 
 
 
+### Installation
+
+First, see if a binary wheel is available for your machine by running:
+
+    $ pip install iBotAutomation
+
+Another option is to build from the latest source on the GitHub repository:
+
+    $ git clone https://github.com/ecrespo66/iBot-Automation.git
+    $ cd iBot
+    $ make
+    $ make install
+
+
+
+
+### Browser Automation
+
+Browser automation examples:
+
+'''python
+from iBot.browser_activities import * 
+
+# undetectable=True to make browser undetectable to AntiBot systems
+Browser = ChromeBrowser(undetectable=True)
+Browser.open()
+Browser.get('https://google.com')
+
+'''
+
+### DataBase Activities
+
+'''python
+from iBot.dataBabase_activities import Sqlite
+
+pathToDatabase = c:/sqliteExample.sqlite
+Sqlite= Sqlite(pathToDatabase) 
+Data = {"Dg":"Saimon","Gt":"Manuel"}
+tableName = random
+Sqlite.Insert(tableName,Data)
+
+'''
+
+
+
+## Contributing
+
+If you are interested in this project, please consider contributing. Here are a
+few ways you can help:
+
+- [Report issues](https://github.com/autopilot-rs/autopy/issues).
+- Fix bugs and [submit pull requests](https://github.com/autopilot-rs/autopy/pulls).
+- Write, clarify, or fix documentation.
+- Suggest or add new features.
+
+## License
+
+This project is licensed under either the [Apache-2.0](LICENSE-APACHE) or
+[MIT](LICENSE-MIT) license, at your option.
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.
 
 
