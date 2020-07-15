@@ -63,6 +63,21 @@ Sqlite.Insert(tableName,Data)
 
 ```
 
+### Email Automation 
+
+```python
+from iBot.email_activities import Mail
+
+email = 'mail@mail.com'
+password = '*******'
+Mail = Mail(email, password)
+
+mails= Mail.fetchBox()
+
+for mail in mails:
+    print(mail.subject)
+
+```
 
 
 ## Contributing
