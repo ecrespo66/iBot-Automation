@@ -36,13 +36,14 @@ Another option is to build from the latest source on the GitHub repository:
 
 ### Browser Automation
 
-Browser automation example:
+1. Check your Chrome version by typing "Chrome://version" in your chrome browser
+2. Download chromeDriver from  [Chrome driver](https://chromedriver.chromium.org/downloads).
 
 ```python
 from iBot.browser_activities import * 
-
 # undetectable=True to make browser undetectable to AntiBot systems
-Browser = ChromeBrowser(undetectable=True)
+PathDriver = "path_to_chrome_driver.exe"
+Browser = ChromeBrowser(PathDriver,undetectable=True)
 Browser.open()
 Browser.get('https://google.com')
 
