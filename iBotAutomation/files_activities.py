@@ -1,7 +1,7 @@
 import os
 import shutil
 import time
-
+import requests
 import PyPDF2
 
 
@@ -30,30 +30,42 @@ class File:
     def rename(self, new_file_name):
         old_path = self.path
         if os.path.isfile(old_path):
-            base_path = old_path.split("\\")[:-1]
-            new_path = "\\".join(base_path) + "\\" + new_file_name
+            if "\\" in old_path:
+                base_path = old_path.split("\\")[:-1]
+                new_path = "\\".join(base_path) + "\\" + new_file_name
+            elif "/" in old_path:
+                base_path = old_path.split("/")[:-1]
+                new_path = "/".join(base_path) + "/" + new_file_name
+
         if not os.path.exists(new_path):
             os.rename(old_path, new_path)
-        return
+        self.path = new_path
 
     def move(self, new_location):
         import uuid
-        name = self.path.split("\\")[-1]
-        new_path = new_location + "\\" + name
+        if "\\" in self.path:
+            name = self.path.split("\\")[-1]
+            new_path = new_location + "\\" + name
+        elif "/" in self.path:
+            name = self.path.split("/")[-1]
+            new_path = new_location + "/" + name
+
         if os.path.exists(self.path):
             if not os.path.exists(new_path):
                 os.rename(self.path, new_path)
         elif os.path.exists(new_path):
-            new_path = new_location + "\\" + \
-                       "(" + str(uuid.uuid4())[:8] + ") " + name
+            if "\\" in self.path:
+                new_path = new_location + "\\" + "(" + str(uuid.uuid4())[:8] + ") " + name
+            elif "/" in self.path:
+                new_path = new_location + "/" + "(" + str(uuid.uuid4())[:8] + ") " + name
             os.rename(self.path, new_path)
             self.path = new_path
-        return
+
 
     def remove(self):
         if os.path.isfile(self.path):
             os.remove(self.path)
-        return
+
 
     def copy(self, new_path):
         from shutil import copyfile
@@ -63,23 +75,17 @@ class File:
         from time import sleep
         while not os.path.exists(self.path):
             sleep(1)
-        return
 
+    @staticmethod
+    def download(url, path, name=None):
+        if not name:
+            filename = path + "/" + name
+        else:
+            filename = path + "/" + str(url).split('/')[-1]
+        r = requests.get(url, allow_redirects=True)
+        open(filename, 'wb').write(r.content)
 
-def downloadfiles(url, path, **kwargs):
-    import requests
-
-    name = kwargs.get('name', None)
-
-    if not name:
-        filename = path + "/" + name
-    else:
-        filename = path + "/" + str(url).split('/')[-1]
-
-    r = requests.get(url, allow_redirects=True)
-    open(filename, 'wb').write(r.content)
-
-    return filename
+        return filename
 
 
 class PDF(File):
