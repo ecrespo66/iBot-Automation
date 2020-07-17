@@ -131,18 +131,16 @@ file.move(folder)
 ### Folder Activities 
 Work with files in python 
 ```python
-from iBot.files_activities import File
+from iBot.files_activities import Folder
 
-path = "Path/to/file"
-file = File(path)
-#Open file
-file.open()
-#rename file
-new_file_name = "file2"
-file.rename(new_file_name)
-#move file
+#movefile
 folder = 'path/to/folder'
-file.move(folder)
+Carpeta = Folder(folder)
+if Carpeta.exists:
+    Carpeta.rename("Folder")
+    FileList = Carpeta.fileList
+    FolderList = Carpeta.subFoldersList
+    
 ```
 
 ## Contributing
