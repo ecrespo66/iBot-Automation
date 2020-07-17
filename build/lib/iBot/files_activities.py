@@ -1,7 +1,7 @@
 import os
 import shutil
 import time
-
+import requests
 import PyPDF2
 
 
@@ -22,38 +22,43 @@ class File:
         self.creationTime = time.ctime(os.path.getctime(path))
         self.modificationTime = time.ctime(os.path.getmtime(path))
 
-    def Open(self):
-        if os.path.isfile(self.path):
-            os.startfile(self.path)
-        return
-
     def rename(self, new_file_name):
         old_path = self.path
         if os.path.isfile(old_path):
-            base_path = old_path.split("\\")[:-1]
-            new_path = "\\".join(base_path) + "\\" + new_file_name
+            if "\\" in old_path:
+                base_path = old_path.split("\\")[:-1]
+                new_path = "\\".join(base_path) + "\\" + new_file_name
+            elif "/" in old_path:
+                base_path = old_path.split("/")[:-1]
+                new_path = "/".join(base_path) + "/" + new_file_name
+
         if not os.path.exists(new_path):
             os.rename(old_path, new_path)
-        return
+        self.path = new_path
 
     def move(self, new_location):
         import uuid
-        name = self.path.split("\\")[-1]
-        new_path = new_location + "\\" + name
+        if "\\" in self.path:
+            name = self.path.split("\\")[-1]
+            new_path = new_location + "\\" + name
+        elif "/" in self.path:
+            name = self.path.split("/")[-1]
+            new_path = new_location + "/" + name
+
         if os.path.exists(self.path):
             if not os.path.exists(new_path):
                 os.rename(self.path, new_path)
         elif os.path.exists(new_path):
-            new_path = new_location + "\\" + \
-                       "(" + str(uuid.uuid4())[:8] + ") " + name
+            if "\\" in self.path:
+                new_path = new_location + "\\" + "(" + str(uuid.uuid4())[:8] + ") " + name
+            elif "/" in self.path:
+                new_path = new_location + "/" + "(" + str(uuid.uuid4())[:8] + ") " + name
             os.rename(self.path, new_path)
             self.path = new_path
-        return
 
     def remove(self):
         if os.path.isfile(self.path):
             os.remove(self.path)
-        return
 
     def copy(self, new_path):
         from shutil import copyfile
@@ -63,23 +68,17 @@ class File:
         from time import sleep
         while not os.path.exists(self.path):
             sleep(1)
-        return
 
+    @staticmethod
+    def download(url, path, name=None):
+        if not name:
+            filename = path + "/" + name
+        else:
+            filename = path + "/" + str(url).split('/')[-1]
+        r = requests.get(url, allow_redirects=True)
+        open(filename, 'wb').write(r.content)
 
-def downloadfiles(url, path, **kwargs):
-    import requests
-
-    name = kwargs.get('name', None)
-
-    if not name:
-        filename = path + "/" + name
-    else:
-        filename = path + "/" + str(url).split('/')[-1]
-
-    r = requests.get(url, allow_redirects=True)
-    open(filename, 'wb').write(r.content)
-
-    return filename
+        return filename
 
 
 class PDF(File):
@@ -94,7 +93,7 @@ class PDF(File):
 
     def readPage(self, pageNum):
         with open(self.path, "rb") as filehandle:
-            pdf = PdfFileReader(filehandle)
+            pdf = PyPDF2.PdfFileReader(filehandle)
             page = pdf.getPage(pageNum)
             text = page.extractText()
             return text
@@ -157,36 +156,38 @@ class Folder:
         self.subFoldersList = self.listSubFolders()
 
     def rename(self, new_folder_name):
-
         old_path = self.path
         if os.path.exists(old_path):
-            base_path = old_path.split("\\")[:-1]
-            new_path = "\\".join(base_path) + "\\" + new_folder_name
+            if "\\" in old_path:
+                base_path = old_path.split("\\")[:-1]
+                new_path = "\\".join(base_path) + "\\" + new_folder_name
+            elif "/" in old_path:
+                base_path = old_path.split("/")[:-1]
+                new_path = "/".join(base_path) + "/" + new_folder_name
+
             if not os.path.exists(new_path):
                 os.rename(old_path, new_path)
-        return new_path
-
-    def open(self):
-        if os.path.isdir(self.path):
-            os.startfile(self.path)
-        return
+        self.path = new_path
 
     def move(self, new_location):
-
         old_path = self.path
         import uuid
-        name = old_path.split("\\")[-1]
-        new_path = new_location + "\\" + name
+        if "\\" in old_path:
+            name = old_path.split("\\")[-1]
+            new_path = new_location + "\\" + name
+        elif "/" in old_path:
+            name = old_path.split("/")[-1]
+            new_path = new_location + "/" + name
+
         if os.path.isdir(old_path):
             if not os.path.isdir(new_path):
                 os.rename(old_path, new_path)
             elif os.path.isdir(new_path):
                 new_path = new_path + " (" + str(uuid.uuid4())[:8] + ")"
                 os.rename(old_path, new_path)
-        return
+        self.path = new_path
 
     def remove(self, allow_root=False, delete_read_only=True):
-
         if len(self.path) > 10 or allow_root:
             if os.path.isdir(self.path):
                 shutil.rmtree(self.path, ignore_errors=delete_read_only)
@@ -206,7 +207,10 @@ class Folder:
     def copy(self, new_location):
         old_path = self.path
         import uuid
-        new_path = new_location + "\\" + old_path.split("\\")[-1]
+        if "\\" in new_location:
+            new_path = new_location + "\\" + old_path.split("\\")[-1]
+        elif "/" in new_location:
+            new_path = new_location + "/" + old_path.split("/")[-1]
         if os.path.isdir(old_path):
             if not os.path.isdir(new_path):
                 shutil.copytree(old_path, new_path)

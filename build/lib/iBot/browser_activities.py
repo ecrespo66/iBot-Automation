@@ -8,12 +8,10 @@ import os
 
 class ChromeBrowser(Chrome):
 
-    def __init__(self, undetectable=False):
+    def __init__(self, pathDriver, undetectable=False):
         self.CurrentPath = os.path.dirname(__file__)
-        self.driver = self.CurrentPath + "/ChromeDriver/chromedriver"
+        self.driver = pathDriver
         self.options = Options()
-        self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        self.options.add_experimental_option('useAutomationExtension', False)
         self.undetectable = undetectable
 
     def open(self):
@@ -25,12 +23,13 @@ class ChromeBrowser(Chrome):
             pass
         super().__init__(self.driver, options=self.options)
 
-
     def ignoreImages(self):
         prefs = {"profile.managed_default_content_settings.images": 2}
         self.options.add_experimental_option("prefs", prefs)
 
     def headless(self):
+        self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        self.options.add_experimental_option('useAutomationExtension', False)
         self.options.add_argument("--headless")
 
     def saveCookies(self):

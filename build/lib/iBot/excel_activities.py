@@ -8,9 +8,9 @@ OpenExcelWorkbook = load_workbook
 NewExcelWorkbook = Workbook
 
 
-class Excel():
+class Excel:
     
-    def __init__(self,path):
+    def __init__(self, path):
         self.path = path
         
         if not os.path.exists(self.path):
@@ -28,7 +28,6 @@ class Excel():
             ExcelCreateWorkbook(self.path)
             opener ="open" if sys.platform == "darwin" else "xdg-open"
             subprocess.call([opener, self.path])
-
 
     def save(self, new_path=None):
 
@@ -68,12 +67,12 @@ class Excel():
         else:
             print("sheet doesn't exist")
         
-    def GetSheets(self):
+    def getSheets(self):
     
         workbook = load_workbook(self.path)
         return workbook.sheetnames
 
-    def ReadCell(self, cell="A1", sheet=None):
+    def readCell(self, cell="A1", sheet=None):
    
         workbook = load_workbook(self.path)
 
@@ -85,7 +84,7 @@ class Excel():
         return worksheet[cell].value
 
 
-    def ReadRowCol(self, r=1, c=1, sheet=None):
+    def readRowCol(self, r=1, c=1, sheet=None):
    
         workbook = load_workbook(self.path)
         if sheet:
