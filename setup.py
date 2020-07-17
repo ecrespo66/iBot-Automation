@@ -10,7 +10,7 @@ with open(path.join(this_directory, 'README.md')) as f:
 
 setup(
     name='iBotAutomation',
-    packages=['iBotAutomation'],
+    packages=['iBot'],
     version='0.6',
     license='[MIT](LICENSE-MIT)',
     descriptionl='Python RPA library',
