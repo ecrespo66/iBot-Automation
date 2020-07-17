@@ -3,8 +3,11 @@ from setuptools import setup
 from setuptools import find_packages
 from os import path
 
+
+# read the contents of your README file
+from os import path
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.md')) as f:
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
@@ -13,7 +16,9 @@ setup(
     packages=['iBotAutomation', 'iBot'],
     version='0.6',
     license='[MIT](LICENSE-MIT)',
-    descriptionl='Python RPA library',
+    description='Python RPA library',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Enrique Crespo',
     author_email='oname.dohe@gmail.com',
     include_package_data=True,
