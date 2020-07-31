@@ -46,7 +46,6 @@ PathDriver = "path_to_chrome_driver.exe"
 Browser = ChromeBrowser(PathDriver,undetectable=True)
 Browser.open()
 Browser.get('https://google.com')
-
 ```
 
 ### DataBase Activities
@@ -59,7 +58,6 @@ Sqlite= Sqlite(pathToDatabase)
 Data = {"Dg":"Saimon","Gt":"Manuel"}
 tableName = "random"
 Sqlite.Insert(tableName,Data)
-
 ```
 
 ### Email Automation 
@@ -75,7 +73,6 @@ mails= Mail.fetchBox()
 
 for mail in mails:
     print(mail.subject)
-
 ```
 ### Excel Automation 
 Get value from cell  example
@@ -89,7 +86,6 @@ sheet = sheets[0]
 cell = "A1"
 
 value = workbook.readCell(cell, sheet)
-
 ```
 
 ### Files Activities 
@@ -160,9 +156,10 @@ print(text)
 
 ### OCR Activities 
 convert images to text
-1. Download latest tesseract version from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md)
-2. Download trainning data from [tesecact trainning data](https://github.com/tesseract-ocr/tessdata).
-3. place traning data in the following folder './tesseract/share/tessdata' 
+1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md)
+2. Download training data from [tesecact trainning data](https://github.com/tesseract-ocr/tessdata).
+3. place training data in the following folder ./tesseract/share/tessdata 
+
 ```python
 from iBot.ocr_activities import OCR
 path = 'path/to/tesseract-executable' 
