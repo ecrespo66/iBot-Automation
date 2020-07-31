@@ -8,7 +8,7 @@ It works in MacOSX, Windows and linux
 
 ## iBot Automation Modules
 =================================
-01. Browser - Automate Browser Activites.
+01. Browser - Automate Browser Activities.
 02. DataBase - Create manage and modify databases.
 03. Email - Read and send Emails.
 04. Excel - Create, read and modify Excel workbooks.
@@ -50,6 +50,7 @@ Browser.get('https://google.com')
 
 ### DataBase Activities
 Insert data example
+
 ```python
 from iBot.dataBase_activities import Sqlite
 
@@ -63,6 +64,7 @@ Sqlite.Insert(tableName,Data)
 
 ### Email Automation 
 Read Emails example **enable less secure apps in your email account settings
+
 ```python
 from iBot.email_activities import Mail
 
@@ -77,6 +79,7 @@ for mail in mails:
 ```
 ### Excel Automation 
 Get value from cell  example
+
 ```python
 from iBot.excel_activities import Excel
 
@@ -91,6 +94,7 @@ value = workbook.readCell(cell, sheet)
 
 ### Files Activities 
 Work with files 
+
 ```python
 from iBot.files_activities import File
 
@@ -107,6 +111,7 @@ file.move(folder)
 
 ### Folder Activities 
 Work with folders 
+
 ```python
 from iBot.files_activities import Folder
 folder = 'path/to/folder'
@@ -122,6 +127,7 @@ if Carpeta.exists:
 
 ### Image Activities 
 Work with Images 
+
 ```python
 from iBot.files_activities import Image
 path = 'path/to/folder'
@@ -147,7 +153,7 @@ print(pdf.pages)
 #get pdf info
 print(pdf.info)
 #Read PDF page 1
-text=""
+text= ''
 for i in range(pdf.pages):
     text += pdf.readPage(i) 
 print(text)
