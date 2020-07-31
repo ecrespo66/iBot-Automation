@@ -133,7 +133,7 @@ if Carpeta.exists:
     #get list of subfolders
     FolderList = Carpeta.subFoldersList
     
-````
+```
 
 ### Image Activities 
 Work with Images 
