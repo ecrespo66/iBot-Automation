@@ -135,7 +135,6 @@ image.crop()
 image.resize((150,250))
 ```
 
-
 ### PDF Activities 
 Work with PDFs 
 ```python
@@ -157,7 +156,7 @@ print(text)
 ### OCR Activities 
 convert images to text
 1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md).
-2. Download training data from [tesecact-training-data](https://github.com/tesseract-ocr/tessdata).
+2. Download training data from [tesecact trainningdata](https://github.com/tesseract-ocr/tessdata).
 3. place training data in the following folder ./tesseract/share/tessdata 
 
 ```python
@@ -175,6 +174,7 @@ scale= 3
 text = ocr.readPdf(filePath, scale= scale, lang='spa')
 print(text)
 ```
+
 ## Contributing
 If you are interested in this project, please consider contributing. Here are a
 few ways you can help:
