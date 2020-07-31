@@ -3,28 +3,20 @@ from .system_activities import id_generator
 from datetime import datetime
 import os
 
-
 class Robot:
 
-    def __init__(self, robotid=None):
+    def __init__(self, robotName, path):
 
         self._DataBase = os.path.abspath(__file__) + "Robots.sqlite"
+        self.robotName = robotName
+        self.path = path
+        robotid = Sqlite.Query(self._DataBase, "SELECT id FROM Robots where name = '{}' ".format(self.robotName))[0][0]
 
         if robotid is None:
-            robotId = id_generator(6)
-
-        if not self.robotQuery(robotid):
-            print("Robot {} doesn't exists".format(robotid))
-        else:
-            print("Robot {} successfully match".format(robotid))
-            self.robotid = robotid
-            self.robotName = \
-                Sqlite.Query(self._DataBase, "SELECT name FROM Robots where id = '{}' ".format(self.robotid))[0][0]
-            self.RobotPath = \
-                Sqlite.Query(self._DataBase, "SELECT path FROM Robots where id = '{}' ".format(self.robotid))[0][0]
+            self.robotid = id_generator(6)
+            Sqlite.Insert({'id':self.robotid,'name': self.robotName,'path':self.path})
 
     def robotQuery(self, robot):
-
         query = "SELECT id FROM Robots where id = '{}' ".format(robot)
         robotquery = Sqlite.Query(self._DataBase, query)
         if len(robotquery) > 0:
