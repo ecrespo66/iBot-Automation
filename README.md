@@ -177,15 +177,8 @@ filePath = 'path/to/pdf'
 scale= 3
 text = ocr.readPdf(filePath, scale= scale, lang='spa')
 print(text)
-
 ```
-
-
-
-
-
 ## Contributing
-
 If you are interested in this project, please consider contributing. Here are a
 few ways you can help:
 
