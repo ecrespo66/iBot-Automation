@@ -13,7 +13,7 @@ class OCR:
         self.testData = str(Path(path).parent.parent) + '/share/tessdata'
         self.tessdata_dir_config = f'--tessdata-dir "{self.testData}"'
 
-    def readPicture(self, filePath, lang):
+    def readPicture(self, filePath, lang='eng'):
         pytesseract.pytesseract.tesseract_cmd = self.path
         text = pytesseract.image_to_string(Image.open(filePath), lang=lang, config=self.tessdata_dir_config)
         return text
