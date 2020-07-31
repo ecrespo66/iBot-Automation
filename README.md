@@ -156,8 +156,8 @@ print(text)
 
 ### OCR Activities 
 convert images to text
-1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md)
-2. Download training data from [tesecact trainning data](https://github.com/tesseract-ocr/tessdata).
+1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md).
+2. Download training data from [tesecact-training-data](https://github.com/tesseract-ocr/tessdata).
 3. place training data in the following folder ./tesseract/share/tessdata 
 
 ```python
