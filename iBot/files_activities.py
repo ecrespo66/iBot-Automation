@@ -67,24 +67,30 @@ class File:
         if os.path.isfile(self.path):
             os.remove(self.path)
 
-    def copy(self, new_location):
-
+    def copy(self, new_location=None):
         import uuid
+        if new_location is None:
+            if "\\" in self.path:
+                new_location = self.path.replace(self.path.split("\\")[-1], "")
+            elif "/" in self.path:
+                new_location = self.path.replace(self.path.split("/")[-1], "")
+
         if "\\" in self.path:
             name = self.path.split("\\")[-1]
             new_path = new_location + "\\" + name
         elif "/" in self.path:
             name = self.path.split("/")[-1]
             new_path = new_location + "/" + name
+
         if os.path.exists(self.path):
             if not os.path.exists(new_path):
                 copyfile(self.path, new_path)
-        elif os.path.exists(new_path):
-            if "\\" in self.path:
-                new_path = new_location + "\\" + "(" + str(uuid.uuid4())[:8] + ") " + name
-            elif "/" in self.path:
-                new_path = new_location + "/" + "(" + str(uuid.uuid4())[:8] + ") " + name
-            copyfile(self.path, new_path)
+            elif os.path.exists(new_path):
+                if "\\" in self.path:
+                    new_path = new_location + "\\" + "(" + str(uuid.uuid4())[:8] + ") " + name
+                elif "/" in self.path:
+                    new_path = new_location + "/" + "(" + str(uuid.uuid4())[:8] + ") " + name
+                copyfile(self.path, new_path)
 
     def waitFor(self):
         from time import sleep
@@ -96,28 +102,28 @@ class File:
 class PDF(File):
     def __init__(self, path):
         File.__init__(self, path)
-
         self.path = path
         self.pages = PyPDF2.PdfFileReader(open(path, "rb")).getNumPages() - 1
         self.info = PyPDF2.PdfFileReader(open(path, "rb")).getDocumentInfo()
         return
 
-    def readPage(self, pageNum):
-        with open(self.path, "rb") as filehandle:
-            pdf = PyPDF2.PdfFileReader(filehandle)
+    def readPage(self, pageNum, encoding=None):
+        if encoding is None:
+            encoding = "utf-8"
+        with open(self.path, "rb") as file:
+            pdf = PyPDF2.PdfFileReader(file)
             page = pdf.getPage(pageNum)
-            text = page.extractText()
+            text = page.extractText().encode(encoding)
+            if text is None:
+                raise ValueError("Pdf not readable with this method, use OCR instead")
             return text
 
     def merge(self, pdf_document2, merged_path):
         from PyPDF2 import PdfFileMerger
-
         pdfs = [str(self.path), str(pdf_document2)]
         merger = PdfFileMerger()
-
         for pdf in pdfs:
             merger.append(pdf)
-
         merger.write(merged_path)
         return
 
@@ -159,10 +165,12 @@ class Image(File):
 class Folder:
     def __init__(self, path):
         self.path = path
-        self.name = path.split("\\")[-1:]
-        self.exists = os.path.isdir(path)
-        self.fileList = self.filelist()
-        self.subFoldersList = self.listSubFolders()
+        if not os.path.exists(self.path):
+            os.makedirs(path)
+        if "\\" in path:
+            self.name = path.split("\\")[-1:]
+        elif "/" in path:
+            self.name = path.split("/")[-1:]
 
     def rename(self, new_folder_name):
         old_path = self.path
@@ -211,23 +219,25 @@ class Folder:
                         os.remove(os.path.join(root, name))
                     for name in dirs:
                         os.rmdir(os.path.join(root, name))
-        return
 
-    def copy(self, new_location):
-        old_path = self.path
+    def copy(self, new_location = None):
         import uuid
+        if new_location is None:
+            if "\\" in self.path:
+                new_location = self.path.replace(self.path.split("\\")[-1], "")
+            elif "/" in self.path:
+                new_location = self.path.replace(self.path.split("/")[-1], "")
         if "\\" in new_location:
-            new_path = new_location + "\\" + old_path.split("\\")[-1]
+            new_path = new_location + "\\" + self.path.split("\\")[-1]
         elif "/" in new_location:
-            new_path = new_location + "/" + old_path.split("/")[-1]
-        if os.path.isdir(old_path):
+            new_path = new_location + "/" + self.path.split("/")[-1]
+        if os.path.isdir(self.path):
             if not os.path.isdir(new_path):
-                shutil.copytree(old_path, new_path)
+                shutil.copytree(self.path, new_path)
             elif os.path.isdir(new_path):
                 if os.path.isdir(new_path):
                     new_path = new_path + " (" + str(uuid.uuid4())[:8] + ")"
-                shutil.copytree(old_path, new_path)
-        return
+                shutil.copytree(self.path, new_path)
 
     def listSubFolders(self):
         subfolders = [f.path for f in os.scandir(self.path) if f.is_dir()]
@@ -239,11 +249,6 @@ class Folder:
             if File[0] != ".":
                 FileList.append(self.path + "/" + File)
         return FileList
-
-    def create(self):
-        if not os.path.exists(self.path):
-            os.makedirs(self.path)
-        return self.path
 
     def downloadFile(self, url, name=None):
         if not name:
