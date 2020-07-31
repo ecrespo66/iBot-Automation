@@ -36,8 +36,8 @@ Another option is to build from the latest source on the GitHub repository:
 
 ### Browser Automation
 Browser automation example
-1. Check your Chrome version by typing "Chrome://version" in your chrome browser
-2. Download chromeDriver from  [Chrome driver](https://chromedriver.chromium.org/downloads).
+1. Check your Chrome version by typing Chrome://version in your chrome browser
+2. Download chromeDriver from [Chrome driver](https://chromedriver.chromium.org/downloads).
 
 ```python
 from iBot.browser_activities import * 
@@ -51,13 +51,14 @@ Browser.get('https://google.com')
 ### DataBase Activities
 Insert data example
 ```python
-from iBot.dataBabase_activities import Sqlite
+from iBot.dataBase_activities import Sqlite
 
 pathToDatabase = "c:/sqliteExample.sqlite"
 Sqlite= Sqlite(pathToDatabase) 
-Data = {"Dg":"Saimon","Gt":"Manuel"}
+Data = {"Dg":"Saimon", "Gt":"Manuel"}
 tableName = "random"
 Sqlite.Insert(tableName,Data)
+
 ```
 
 ### Email Automation 
@@ -154,7 +155,7 @@ print(text)
 
 
 ### OCR Activities 
-convert images to text
+Convert images to text
 1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md).
 2. Download training data from [tesecact trainningdata](https://github.com/tesseract-ocr/tessdata).
 3. place training data in the following folder ./tesseract/share/tessdata 
@@ -165,7 +166,7 @@ path = 'path/to/tesseract-executable'
 ocr = OCR(path)
 #convert image to text 
 path = 'path/to/picture'
-text = ocr.readPicture(path,lang='eng')
+text = ocr.readPicture(path, lang='eng')
 print(text)
 #convert pdf to text using OCR
 filePath = 'path/to/pdf'
