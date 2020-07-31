@@ -40,12 +40,14 @@ Browser automation example
 2. Download chromeDriver from [Chrome driver](https://chromedriver.chromium.org/downloads).
 
 ```python
+
 from iBot.browser_activities import * 
 # undetectable=True to make browser undetectable to AntiBot systems
 PathDriver = "path_to_chrome_driver.exe"
 Browser = ChromeBrowser(PathDriver,undetectable=True)
 Browser.open()
 Browser.get('https://google.com')
+
 ```
 
 ### DataBase Activities
