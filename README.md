@@ -52,7 +52,7 @@ Data = {"Dg":"Saimon", "Gt":"Manuel"}
 tableName = "random"
 Sqlite.Insert(tableName,Data)
 
-``` 
+```
 
 ### Email Automation 
 Read Emails example **enable less secure apps in your email account settings
