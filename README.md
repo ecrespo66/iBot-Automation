@@ -56,19 +56,15 @@ Sqlite.Insert(tableName,Data)
 Read Emails example **enable less secure apps in your email account settings
 
 ```python
-
 from iBot.email_activities import Mail
-
 email = 'mail@mail.com'
 password = '*******'
 Mail = Mail(email, password)
-
 mails= Mail.fetchBox()
-
 for mail in mails:
     print(mail.subject)
-
 ```
+
 ### Excel Automation 
 Get value from cell  example
 
