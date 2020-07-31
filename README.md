@@ -39,11 +39,17 @@ Browser automation example
 1. Check your Chrome version by typing Chrome://version in your chrome browser
 2. Download chromeDriver from [Chrome driver](https://chromedriver.chromium.org/downloads).
 
-
+```python
+from iBot.browser_activities import * 
+# undetectable=True to make browser undetectable to AntiBot systems
+PathDriver = "path_to_chrome_driver.exe"
+Browser = ChromeBrowser(PathDriver,undetectable=True)
+Browser.open()
+Browser.get('https://google.com')
+```
 
 ### DataBase Activities
 Insert data example
-
 ```python
 from iBot.dataBase_activities import Sqlite
 pathToDatabase = "c:/sqliteExample.sqlite"
@@ -51,7 +57,6 @@ Sqlite= Sqlite(pathToDatabase)
 Data = {"Dg":"Saimon", "Gt":"Manuel"}
 tableName = "random"
 Sqlite.Insert(tableName,Data)
-
 ```
 
 ### Email Automation 
@@ -161,7 +166,7 @@ print(text)
 ### OCR Activities 
 Convert images to text
 1. Download latest version of Tesseract from here: [tesseract-ocr](https://github.com/tesseract-ocr/tessdoc/blob/master/Home.md).
-2. Download training data from [tesecact trainningdata](https://github.com/tesseract-ocr/tessdata).
+2. Download training data from [tesseract trainning data](https://github.com/tesseract-ocr/tessdata).
 3. place training data in the following folder ./tesseract/share/tessdata 
 
 ```python
