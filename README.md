@@ -48,19 +48,7 @@ Browser.open()
 Browser.get('https://google.com')
 ```
 
-### DataBase Activities
-Insert data example
 
-```python
-from iBot.dataBase_activities import Sqlite
-
-pathToDatabase = "c:/sqliteExample.sqlite"
-Sqlite= Sqlite(pathToDatabase) 
-Data = {"Dg":"Saimon", "Gt":"Manuel"}
-tableName = "random"
-Sqlite.Insert(tableName,Data)
-
-```
 
 ### Email Automation 
 Read Emails example **enable less secure apps in your email account settings
