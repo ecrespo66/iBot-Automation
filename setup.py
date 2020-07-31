@@ -13,7 +13,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='iBotAutomation',
-    packages=['iBotAutomation', 'iBot'],
+    packages=['iBotAutomation'],
     version='0.8',
     license='[MIT](LICENSE-MIT)',
     description='Python RPA library',
