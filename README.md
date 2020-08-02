@@ -190,6 +190,36 @@ print(text)
 ```
 
 
+### Robot Activities 
+Work with Robot, Queues, Items and Logs in the most simple way
+
+```python
+from iBot.robot_activities import Robot
+#Instance the Robot Object
+RobotName = Robot("name_of_your_robot")
+
+#Create a Queue for your Robot
+if not RobotName.findQueuesByName("Name_of_the_queue"):
+    Queue1 = RobotName.createQueue("Name_of_the_queue")
+else:
+    Queue1 = RobotName.findQueuesByName("Name_of_the_queue")
+
+#Add items to your queue
+for i in range(0,100):
+    Queue1.createItem(i)
+
+#Get items of your queue
+while True:
+    item = Queue1.getNextItem()
+    if not item:
+        break
+    else:
+        item.setItemAsOk()  
+    print(item.value,item.status)
+```
+
+
+
 ## Contributing
 If you are interested in this project, please consider contributing. Here are a
 few ways you can help:
