@@ -1,17 +1,64 @@
-# llama a la funcion "SqliteInsert(DataBase, table_name , diccionary, **kwargs)"
 import sqlite3
 
 
 class Sqlite:
     def __init__(self, database):
-        self.cursor = self.sqliteConnection.cursor()
-        self.sqliteConnection = sqlite3.connect(self.DataBase)
         self.DataBase = database
-        self.Tables = self.Query('SELECT name from sqlite_master where type= "table"')
-        self.createConexion()
+        self.sqliteConnection = None
+        self.cursor = None
+
+    def __createConnection(self):
+        self.sqliteConnection = sqlite3.connect(self.DataBase)
+        self.cursor = self.sqliteConnection.cursor()
+
+    def __closeConnection(self):
+        self.sqliteConnection.commit()
+        self.cursor.close()
+        self.sqliteConnection.close()
+
+    def tableList(self):
+        tables = []
+        try:
+            self.__createConnection()
+            self.cursor.execute('SELECT name from sqlite_master where type= "table"')
+            TableList = self.cursor.fetchall()
+            self.__closeConnection()
+        except sqlite3.Error as error:
+            raise error
+        for table in TableList:
+            tables.append(table[0])
+        return tables
+
+    def createTable(self, tableName, data):
+        tables = self.tableList()
+        if tableName not in tables:
+            query = self.__createTableQuery(tableName, data)
+            self.__createConnection()
+            self.cursor.execute(query)
+            self.__closeConnection()
+
+    def Insert(self, tableName, data):
+        try:
+            self.createTable(tableName, data)
+            InsertQuery = self.__insertQuery(tableName, data)
+            self.__createConnection()
+            self.cursor.execute(InsertQuery)
+            self.__closeConnection()
+        except sqlite3.Error as error:
+            raise error
+
+    def Query(self, query):
+        try:
+            self.__createConnection()
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            self.__closeConnection()
+            return result
+        except sqlite3.Error as error:
+            raise error
 
     @staticmethod
-    def insertData(table_name, data):
+    def __insertQuery(table_name, data):
         InsertQuery = "INSERT INTO " + table_name
         InsertQuery2 = ""
         FieldNames = ""
@@ -26,7 +73,7 @@ class Sqlite:
         return InsertQuery
 
     @staticmethod
-    def createTable(table_name, data, types=None):
+    def __createTableQuery(table_name, data, types=None):
         if types is None:
             types = {}
         for x, y in data.items():
@@ -47,44 +94,4 @@ class Sqlite:
                 for x, y in row.items():
                     query2 = query2 + x + " " + y + ", "
         query = query + (query2[:-1])[:-1] + ")"
-
         return query
-
-    def Insert(self, table_name, data):
-        try:
-            self.cursor.execute('SELECT name from sqlite_master where type= "table"')
-            TableList = self.cursor.fetchall()
-            Tables = []
-            for table in TableList:
-                Tables.append(table[0])
-
-            if table_name not in Tables:
-                QueryTable = self.createTable(table_name, data)
-                self.cursor.execute(QueryTable)
-
-        except sqlite3.Error as error:
-            return error
-
-        try:
-            InsertQuery = self.insertData(table_name, data)
-            self.cursor.execute(InsertQuery)
-            self.sqliteConnection.commit()
-            self.cursor.close()
-
-        except sqlite3.Error as error:
-            return error
-        finally:
-            if self.sqliteConnection:
-                self.cursor.close()
-                self.sqliteConnection.close()
-
-    def Query(self, query):
-        try:
-            self.cursor.execute(query)
-            result = self.cursor.fetchall()
-            self.sqliteConnection.commit()
-            self.cursor.close()
-            self.sqliteConnection.close()
-            return result
-        except sqlite3.Error as error:
-            return error
