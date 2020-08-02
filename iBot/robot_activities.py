@@ -55,7 +55,6 @@ class Queue:
     def __init__(self, robotId, queueName=None, queueId=None):
         Dbpath = os.path.abspath(os.path.join(os.path.dirname(__file__), ".")) + "/Robots.sqlite"
         self.__DataBase = Sqlite(Dbpath)
-        # self.items = []
         self.__retryTimes = 1
         if queueId is None:
             self.queueId = id_generator(16)
@@ -83,7 +82,11 @@ class Queue:
         Item(self.queueId, value=item)
 
     def getNextItem(self):
-        return next(self.__getItem())
+        try:
+            item = next(self.__getItem())
+        except:
+            item = None
+        return item
 
     def setRetryTimes(self, times):
         self.__retryTimes = times
