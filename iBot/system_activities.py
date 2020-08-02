@@ -22,5 +22,4 @@ def id_generator(size=6):
 
 
 def Wait(seconds=None):
-
     time.sleep(seconds)
