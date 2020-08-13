@@ -188,8 +188,30 @@ text = ocr.readPdf(filePath, scale= scale, lang='spa')
 print(text)
 
 ```
+### Word Activities 
+Work with Word Documents
+```python
+from iBot.word_activities import Word
 
-
+#Instance Word Object
+document = Word("path_to_word_document")
+#add heading to word document
+document.addHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 0)
+#add paragraph to word document
+paragraph = ''' 
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+'''
+document.addParagraph(paragraph)
+#add picture to word document
+document.addPicture('path_to_picture', 300, 300)
+table = [('one', 'two', 'three'), (112, 122, 123)]
+document.addTable(table)
+#read word document
+document.read()
+#convert word to pdf
+document.convertToPdf()
+```
 ### Robot Activities 
 Work with Robot, Queues, Items and Logs in the most simple way
 
@@ -202,7 +224,7 @@ RobotName = Robot("name_of_your_robot")
 if not RobotName.findQueuesByName("Name_of_the_queue"):
     Queue1 = RobotName.createQueue("Name_of_the_queue")
 else:
-    Queue1 = RobotName.findQueuesByName("Name_of_the_queue")
+    Queue1 = RobotName.findQueuesByName("Name_of_the_queue")[0]
 
 #Add items to your queue
 for i in range(0,100):
