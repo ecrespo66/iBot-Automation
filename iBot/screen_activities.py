@@ -1,7 +1,6 @@
 import pyautogui
 import subprocess
 
-
 class Screen:
 
     def __init__(self):
@@ -10,7 +9,7 @@ class Screen:
 
     @staticmethod
     def click(clicks=1, button='left'):
-        pyautogui.click(clicks, button)
+        pyautogui.click(clicks=clicks, button=button)
 
     @staticmethod
     def moveMouseTo(pos):
@@ -23,7 +22,7 @@ class Screen:
     @staticmethod
     def FindElement(image):
         button = pyautogui.locateCenterOnScreen(image)
-        if subprocess.call("system_profiler SPDisplaysDataType | grep 'retina'", shell=True) == 0:
+        if subprocess.call("system_profiler SPDisplaysDataType | grep 'retina'", shell=True) == 1:
             button = (button[0] / 2, button[1] / 2)
         return button
 
@@ -33,9 +32,9 @@ class Screen:
             pyautogui.press(t)
 
     @staticmethod
-    def click_image(png_name, clicks=2):
+    def clickImage(png_name, clicks=2):
         button = pyautogui.locateCenterOnScreen(png_name)
-        if subprocess.call("system_profiler SPDisplaysDataType | grep 'retina'", shell=True) == 0:
+        if subprocess.call("system_profiler SPDisplaysDataType | grep 'retina'", shell=True) == 1:
             button = (button[0] / 2, button[1] / 2)
         pyautogui.click(button, clicks=clicks)
         return
