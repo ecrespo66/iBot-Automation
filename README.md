@@ -212,6 +212,24 @@ document.read()
 #convert word to pdf
 document.convertToPdf()
 ```
+
+###Screen Activities
+Find screen elements on the screen, mouse and keyboard activities 
+```python
+from iBot.screen_activities import Screen
+#instance Screen object
+screen = Screen()
+#find element
+element = screen.FindElement('path/to/element.png')
+#move mouse to position
+screen.moveMouseTo(element)
+#click on position
+screen.click()
+#keyboard activities
+text= "Hello world"
+screen.write(text)
+```
+
 ### Robot Activities 
 Work with Robot, Queues, Items and Logs in the most simple way
 
