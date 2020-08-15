@@ -213,7 +213,7 @@ document.read()
 document.convertToPdf()
 ```
 
-###Screen Activities
+### Screen Activities
 Find screen elements on the screen, mouse and keyboard activities 
 ```python
 from iBot.screen_activities import Screen
