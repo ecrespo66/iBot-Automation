@@ -1,6 +1,7 @@
 import pyautogui
 import subprocess
 
+
 class Screen:
 
     def __init__(self):
