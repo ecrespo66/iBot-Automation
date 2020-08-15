@@ -14,7 +14,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='iBotAutomation',
     packages=['iBot'],
-    version='0.10',
+    version='1.0',
     license='[MIT](LICENSE-MIT)',
     description='Python RPA library',
     long_description=long_description,
